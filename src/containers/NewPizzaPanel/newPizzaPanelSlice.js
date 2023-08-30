@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   nuevaPizza: false,
+  pizza: [],
 };
 
 export const newPizzaPanelSlice = createSlice({
@@ -10,10 +11,15 @@ export const newPizzaPanelSlice = createSlice({
   reducers: {
     crearNuevaPizza: (state, action) => {
       state.nuevaPizza = true;
+      state.pizza = [{ nombre: "pizza", letra: "P" }];
+    },
+    agregarIngrediente: (state, action) => {
+      state.pizza.push(action.payload);
     },
   },
 });
 
-export const { crearNuevaPizza } = newPizzaPanelSlice.actions;
+export const { crearNuevaPizza, agregarIngrediente } =
+  newPizzaPanelSlice.actions;
 
 export default newPizzaPanelSlice.reducer;
