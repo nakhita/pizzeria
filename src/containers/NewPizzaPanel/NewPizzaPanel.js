@@ -10,6 +10,12 @@ import { StyledIngredienteButton } from "../../componentes/NewPizza/ContenedorIn
 import { StyledImgIngrediente } from "../../componentes/NewPizza/ContenedorIngredientes/Ingrediente/StyledImgIngrediente";
 import { StyledIngredienteNombre } from "../../componentes/NewPizza/ContenedorIngredientes/Ingrediente/StyledIngredienteNombre";
 import { StyledIngredientePrecio } from "../../componentes/NewPizza/ContenedorIngredientes/Ingrediente/StyledIngredientePrecio";
+import { StyledContainerDireccion } from "../../componentes/NewPizza/Direccion/StyledContainerDireccion";
+import { StyledTitulo } from "../../componentes/NewPizza/Direccion/StyledTitulo";
+import { StyledSubPanelIngredienteDireccion } from "../../componentes/NewPizza/StyledSubPanelIngredienteDireccion";
+import { StyledDescripcion } from "../../componentes/NewPizza/Direccion/StyledDescripcion";
+import { StyledInputPedido } from "../../componentes/NewPizza/Direccion/StyledInputPedido";
+import { StyledButtonCrearPedido } from "../../componentes/NewPizza/Direccion/StyledButtonCrearPedido";
 
 const NewPizzaPanel = () => {
   const dispatch = useDispatch();
@@ -22,6 +28,38 @@ const NewPizzaPanel = () => {
       </StyledIconTabIngrediente>
     ));
   };
+
+  const listarBotonesIngredientes = () => {
+    return ingredientes.map((ingrediente) => (
+      <StyledIngredienteButton
+        onClick={(e) =>
+          dispatch(
+            agregarIngrediente({
+              nombre: ingrediente.nombre,
+              letra: ingrediente.letra,
+            })
+          )
+        }
+      >
+        <StyledImgIngrediente
+          ingrediente={ingrediente.nombre}
+        ></StyledImgIngrediente>
+        <StyledIngredienteNombre>{ingrediente.nombre}</StyledIngredienteNombre>
+        <StyledIngredientePrecio>
+          +${ingrediente.precio}
+        </StyledIngredientePrecio>
+      </StyledIngredienteButton>
+    ));
+  };
+  const ingredientes = [
+    { nombre: "Salsa", letra: "S", precio: 0 },
+    { nombre: "Queso", letra: "Q", precio: 0 },
+    { nombre: "Tomate", letra: "T", precio: 100 },
+    { nombre: "Champiñones", letra: "C", precio: 200 },
+    { nombre: "Piña", letra: "P", precio: 200 },
+    { nombre: "Peperoni", letra: "P", precio: 150 },
+  ];
+
   return (
     <StyledContainerNewPizza>
       <StyleMiniTabIngrediente>
@@ -30,17 +68,19 @@ const NewPizzaPanel = () => {
         </StyledButtonNewPizza>
         <div>{nuevaPizza ? listaIngredientes() : ""}</div>
       </StyleMiniTabIngrediente>
-      <StyledContenedorIngredientes>
-        <StyledIngredienteButton
-          onClick={(e) =>
-            dispatch(agregarIngrediente({ nombre: "pepinillo", letra: "P" }))
-          }
-        >
-          <StyledImgIngrediente ingrediente="pepinillo"></StyledImgIngrediente>
-          <StyledIngredienteNombre>pepinillo</StyledIngredienteNombre>
-          <StyledIngredientePrecio>+$100</StyledIngredientePrecio>
-        </StyledIngredienteButton>
-      </StyledContenedorIngredientes>
+      <StyledSubPanelIngredienteDireccion>
+        <StyledContenedorIngredientes>
+          {listarBotonesIngredientes()}
+        </StyledContenedorIngredientes>
+        <StyledContainerDireccion>
+          <StyledTitulo>Direccion Pedido</StyledTitulo>
+          <StyledDescripcion>Nombre</StyledDescripcion>
+          <StyledInputPedido></StyledInputPedido>
+          <StyledDescripcion>Direccion</StyledDescripcion>
+          <StyledInputPedido></StyledInputPedido>
+          <StyledButtonCrearPedido>Crear Pedido</StyledButtonCrearPedido>
+        </StyledContainerDireccion>
+      </StyledSubPanelIngredienteDireccion>
     </StyledContainerNewPizza>
   );
 };

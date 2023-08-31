@@ -11,7 +11,7 @@ export const newPizzaPanelSlice = createSlice({
   reducers: {
     crearNuevaPizza: (state, action) => {
       state.nuevaPizza = true;
-      state.pizza = [{ nombre: "pizza", letra: "P" }];
+      state.pizza = [{ nombre: "Pizza", letra: "P" }];
     },
     agregarIngrediente: (state, action) => {
       state.pizza.push(action.payload);

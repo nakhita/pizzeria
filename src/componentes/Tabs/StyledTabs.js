@@ -10,6 +10,7 @@ export const StyledTabButton = styled.button`
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: "Roboto";
 
   &:hover {
     background-color: #f0f0f0;
