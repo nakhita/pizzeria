@@ -14,31 +14,30 @@ export const StyledImgIngrediente = styled.div`
 `;
 
 function getImg(ingrediente) {
-  console.log(ingrediente);
   const colors = [
     {
       nombre: "Salsa",
-      img: "https://us.123rf.com/450wm/emojiimage/emojiimage1803/emojiimage180300195/96927052-salsa-con-aj%C3%AD-rojo-en-un-taz%C3%B3n-de-cer%C3%A1mica-salsa-picante-tradicional-de-la-cocina-mexicana-l%C3%ADquido.jpg?ver=6",
+      img: "https://i.imgur.com/Ua4fMHh.png",
     },
     {
       nombre: "Queso",
-      img: "https://i.pinimg.com/originals/e0/2f/5a/e02f5ad69c7b32f7d955dcc37eaa5946.png",
+      img: "https://i.imgur.com/VdbFZQE.png",
     },
     {
       nombre: "Tomate",
-      img: "https://media.istockphoto.com/id/1003864042/vector/slice-of-red-tomato-isolated-on-white-flat-tomato-icon-vector-illustration.jpg?s=170667a&w=0&k=20&c=AHWZb1Udj7GgtgQesFtxCRWCa8HjL_nFIYDsXHpkzUU=",
+      img: "https://i.imgur.com/ARCQiSi.png",
     },
     {
       nombre: "Champiñones",
-      img: "https://png.pngtree.com/element_our/20190602/ourlarge/pngtree-cut-champignons-decoration-illustration-image_1385668.jpg",
+      img: "https://i.imgur.com/fybPYH2.png",
     },
     {
       nombre: "Piña",
-      img: "https://previews.123rf.com/images/viktorijareut/viktorijareut1707/viktorijareut170700133/81377885-ilustraci%C3%B3n-de-vector-icono-de-rodaja-de-pi%C3%B1a-aislado-sobre-fondo-blanco-fruta-tropical-de-verano.jpg",
+      img: "https://i.imgur.com/GOXzQSn.png",
     },
     {
       nombre: "Peperoni",
-      img: "https://cdn-icons-png.flaticon.com/512/2718/2718144.png",
+      img: "https://i.imgur.com/4ICQ6jG.png",
     },
   ];
 

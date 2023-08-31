@@ -13,7 +13,6 @@ const Tabs = () => {
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
-    console.log(tabIndex);
   };
 
   return (

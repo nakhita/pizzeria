@@ -1,5 +1,9 @@
 import React from "react";
-import { agregarIngrediente, crearNuevaPizza } from "./newPizzaPanelSlice";
+import {
+  agregarIngrediente,
+  crearNuevaPizza,
+  quitarIngrediente,
+} from "./newPizzaPanelSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { StyledButtonNewPizza } from "../../componentes/Button/StyledButtonNewPizza";
 import { StyledContainerNewPizza } from "../../componentes/NewPizza/StyledContainerNewPizza";
@@ -19,27 +23,44 @@ import { StyledButtonCrearPedido } from "../../componentes/NewPizza/Direccion/St
 
 const NewPizzaPanel = () => {
   const dispatch = useDispatch();
-  const { nuevaPizza, pizza } = useSelector((state) => state.newPizza);
+  const { nuevaPizza, pizza, ingredientes } = useSelector(
+    (state) => state.newPizza
+  );
 
   const listaIngredientes = () => {
     return pizza.map((ingrediente) => (
-      <StyledIconTabIngrediente ingrediente={ingrediente.nombre}>
+      <StyledIconTabIngrediente
+        onClick={(e) => dispatch(quitarIngrediente(ingrediente.nombre))}
+        ingrediente={ingrediente.nombre}
+      >
         {ingrediente.letra}
       </StyledIconTabIngrediente>
     ));
   };
 
+  const isDisabledIngrediente = (nombreIngrediente) => {
+    const ingredienteEncontrado = pizza.find(
+      (ingrediente) => ingrediente.nombre === nombreIngrediente
+    );
+    if (ingredienteEncontrado) {
+      return true;
+    }
+    return false;
+  };
+
   const listarBotonesIngredientes = () => {
     return ingredientes.map((ingrediente) => (
       <StyledIngredienteButton
-        onClick={(e) =>
+        isDisabled={isDisabledIngrediente(ingrediente.nombre)}
+        onClick={(e) => {
           dispatch(
             agregarIngrediente({
               nombre: ingrediente.nombre,
               letra: ingrediente.letra,
+              disable: true,
             })
-          )
-        }
+          );
+        }}
       >
         <StyledImgIngrediente
           ingrediente={ingrediente.nombre}
@@ -51,14 +72,6 @@ const NewPizzaPanel = () => {
       </StyledIngredienteButton>
     ));
   };
-  const ingredientes = [
-    { nombre: "Salsa", letra: "S", precio: 0 },
-    { nombre: "Queso", letra: "Q", precio: 0 },
-    { nombre: "Tomate", letra: "T", precio: 100 },
-    { nombre: "Champiñones", letra: "C", precio: 200 },
-    { nombre: "Piña", letra: "P", precio: 200 },
-    { nombre: "Peperoni", letra: "P", precio: 150 },
-  ];
 
   return (
     <StyledContainerNewPizza>

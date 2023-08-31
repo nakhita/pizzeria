@@ -17,7 +17,6 @@ export const StyledIconTabIngrediente = styled.button`
 `;
 
 function getColor(ingrediente) {
-  console.log(ingrediente);
   const colors = [
     { nombre: "Pizza", color: "#ffe1a9" },
     { nombre: "Salsa", color: "#821018" },
