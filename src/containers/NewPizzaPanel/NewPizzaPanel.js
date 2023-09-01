@@ -35,7 +35,7 @@ const NewPizzaPanel = () => {
   const { nuevaPizza, pizza, ingredientes } = useSelector(
     (state) => state.newPizza
   );
-  const { listaPedidos, nombrePedido, direccionPedido } = useSelector(
+  const { nombrePedido, direccionPedido } = useSelector(
     (state) => state.pedidos
   );
 
