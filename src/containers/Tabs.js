@@ -7,6 +7,7 @@ import {
 } from "../componentes/Tabs/StyledTabs";
 import { StyledPanelContenedor } from "../componentes/PanelContenedor/StyledPanelContenedor";
 import NewPizzaPanel from "./NewPizzaPanel/NewPizzaPanel";
+import PedidosPanel from "./PedidosPanel/PedidosPanel";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(1);
@@ -38,7 +39,9 @@ const Tabs = () => {
           </StyledTabContent>
         )}
         {activeTab === 2 && (
-          <StyledTabContent>Contenido de la Pestaña 2</StyledTabContent>
+          <StyledTabContent>
+            <PedidosPanel></PedidosPanel>
+          </StyledTabContent>
         )}
       </StyledTabSubContainer>
     </StyledPanelContenedor>

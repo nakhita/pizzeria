@@ -19,7 +19,9 @@ export const newPizzaPanelSlice = createSlice({
   reducers: {
     crearNuevaPizza: (state, action) => {
       state.nuevaPizza = true;
-      state.pizza = [{ nombre: "Pizza", letra: "P", disable: true }];
+      state.pizza = [
+        { nombre: "Pizza", letra: "P", precio: 2000, disable: true },
+      ];
     },
     agregarIngrediente: (state, action) => {
       const ingredienteEncontrado = state.pizza.find(
@@ -37,10 +39,22 @@ export const newPizzaPanelSlice = createSlice({
         state.pizza = listraFiltrada;
       }
     },
+    vaciarLista: (state, action) => {
+      state.pizza = [];
+      state.nuevaPizza = false;
+    },
   },
 });
 
-export const { crearNuevaPizza, agregarIngrediente, quitarIngrediente } =
-  newPizzaPanelSlice.actions;
+export const {
+  crearNuevaPizza,
+  agregarIngrediente,
+  quitarIngrediente,
+  actualizarNombrePedido,
+  actualizarDireccionPedido,
+  crearNuevoPedido,
+  pedidos,
+  vaciarLista,
+} = newPizzaPanelSlice.actions;
 
 export default newPizzaPanelSlice.reducer;

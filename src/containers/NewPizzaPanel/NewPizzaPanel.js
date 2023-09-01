@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   agregarIngrediente,
   crearNuevaPizza,
   quitarIngrediente,
+  vaciarLista,
 } from "./newPizzaPanelSlice";
+import {
+  crearNuevoPedido,
+  actualizarNombrePedido,
+  actualizarDireccionPedido,
+} from "../PedidosPanel/pedidoPanelSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { StyledButtonNewPizza } from "../../componentes/Button/StyledButtonNewPizza";
 import { StyledContainerNewPizza } from "../../componentes/NewPizza/StyledContainerNewPizza";
@@ -20,11 +26,17 @@ import { StyledSubPanelIngredienteDireccion } from "../../componentes/NewPizza/S
 import { StyledDescripcion } from "../../componentes/NewPizza/Direccion/StyledDescripcion";
 import { StyledInputPedido } from "../../componentes/NewPizza/Direccion/StyledInputPedido";
 import { StyledButtonCrearPedido } from "../../componentes/NewPizza/Direccion/StyledButtonCrearPedido";
+import { v4 as uuidv4 } from "uuid";
+import { StyledBannerPizzaCreada } from "../../componentes/NewPizza/StyledBannerPizzaCreada";
 
 const NewPizzaPanel = () => {
   const dispatch = useDispatch();
+  const [showBanner, setShowBanner] = useState(false);
   const { nuevaPizza, pizza, ingredientes } = useSelector(
     (state) => state.newPizza
+  );
+  const { listaPedidos, nombrePedido, direccionPedido } = useSelector(
+    (state) => state.pedidos
   );
 
   const listaIngredientes = () => {
@@ -53,13 +65,16 @@ const NewPizzaPanel = () => {
       <StyledIngredienteButton
         isDisabled={isDisabledIngrediente(ingrediente.nombre)}
         onClick={(e) => {
-          dispatch(
-            agregarIngrediente({
-              nombre: ingrediente.nombre,
-              letra: ingrediente.letra,
-              disable: true,
-            })
-          );
+          if (nuevaPizza) {
+            dispatch(
+              agregarIngrediente({
+                nombre: ingrediente.nombre,
+                letra: ingrediente.letra,
+                precio: ingrediente.precio,
+                disable: true,
+              })
+            );
+          }
         }}
       >
         <StyledImgIngrediente
@@ -73,6 +88,40 @@ const NewPizzaPanel = () => {
     ));
   };
 
+  const calcularPrecioTotal = () => {
+    console.log(pizza);
+    const precioTotal = pizza.reduce((total, ingrediente) => {
+      return total + ingrediente.precio;
+    }, 0);
+    return precioTotal;
+  };
+  const handleShowBanner = () => {
+    setShowBanner(true);
+
+    setTimeout(() => {
+      setShowBanner(false);
+    }, 2000);
+  };
+  const crearPedido = () => {
+    if (nuevaPizza) {
+      if (direccionPedido !== "" && nombrePedido !== "") {
+        const totalPrecio = calcularPrecioTotal();
+        const unicaID = uuidv4();
+        dispatch(
+          crearNuevoPedido({
+            id: unicaID,
+            nombre: nombrePedido,
+            direccion: direccionPedido,
+            pizza: pizza,
+            total: totalPrecio,
+            entregado: false,
+          })
+        );
+        dispatch(vaciarLista());
+        handleShowBanner();
+      }
+    }
+  };
   return (
     <StyledContainerNewPizza>
       <StyleMiniTabIngrediente>
@@ -87,11 +136,28 @@ const NewPizzaPanel = () => {
         </StyledContenedorIngredientes>
         <StyledContainerDireccion>
           <StyledTitulo>Direccion Pedido</StyledTitulo>
+          {showBanner && (
+            <div className="banner">
+              <StyledBannerPizzaCreada>
+                ¡Se creó la pizza correctamente!
+              </StyledBannerPizzaCreada>
+            </div>
+          )}
           <StyledDescripcion>Nombre</StyledDescripcion>
-          <StyledInputPedido></StyledInputPedido>
+          <StyledInputPedido
+            value={nombrePedido}
+            onChange={(e) => dispatch(actualizarNombrePedido(e.target.value))}
+          ></StyledInputPedido>
           <StyledDescripcion>Direccion</StyledDescripcion>
-          <StyledInputPedido></StyledInputPedido>
-          <StyledButtonCrearPedido>Crear Pedido</StyledButtonCrearPedido>
+          <StyledInputPedido
+            value={direccionPedido}
+            onChange={(e) =>
+              dispatch(actualizarDireccionPedido(e.target.value))
+            }
+          ></StyledInputPedido>
+          <StyledButtonCrearPedido onClick={(e) => crearPedido()}>
+            Crear Pedido
+          </StyledButtonCrearPedido>
         </StyledContainerDireccion>
       </StyledSubPanelIngredienteDireccion>
     </StyledContainerNewPizza>
